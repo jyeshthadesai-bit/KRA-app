@@ -605,7 +605,7 @@ function buildRate() {
       '</div>'+
       '<div class="tc-right">'+
         '<span class="badge '+ri.c+'">'+ri.l+'</span>'+
-        '<span class="sc-pill'+(sc!==null?" has":")")+'">'+(sc!==null?sc.toFixed(1)+"/100":"Rate KPIs")+'</span>'+
+        '<span class="sc-pill'+(sc!==null?" has":"")+'">'+(sc!==null?sc.toFixed(1)+"/100":"Rate KPIs")+'</span>'+
         '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#555870" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>'+
       '</div>'+
     '</div>';
@@ -628,8 +628,8 @@ function buildKpiPanel(task) {
     var cur = (task.ratings || {})[k.id] || "";
     var gained = cur ? bGained(cur, k.wt) : 0;
     var bbtns = BANDS.map(function(b) {
-      return '<button class="bb'+(cur===b?" sel":"')+'" data-tid="'+task.id+'" data-kpi="'+k.id+'" data-b="'+b+'">'+b+'</button>';
-    }).join("").replace(/sel="'/g, 'sel"');
+      return '<button class="bb'+(cur===b?" sel":"")+'" data-tid="'+task.id+'" data-kpi="'+k.id+'" data-b="'+b+'">'+b+'</button>';
+    }).join("");
     html += '<div class="kpi-row">'+
       '<div class="ki-num" style="color:'+KC[i]+'">'+k.id+'</div>'+
       '<div><div class="ki-name">'+k.name+'</div><div class="ki-desc">'+k.desc+'</div></div>'+
@@ -856,8 +856,7 @@ function exportCSV() {
       rows.push(['"'+m.id+'"','"'+mlabel(mo)+'"'].concat(avgs.map(function(v){return v!==null?v:"";})).concat([sc!==null?sc:"—",'"'+ri.l+'"']).join(","));
     });
   });
-  var blob = new Blob([rows.join("
-")],{type:"text/csv"});
+  var blob = new Blob([rows.join("\\n")],{type:"text/csv"});
   var a = document.createElement("a");
   a.href = URL.createObjectURL(blob);
   a.download = "KRA_"+new Date().toISOString().slice(0,7)+".csv";
