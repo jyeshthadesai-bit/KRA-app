@@ -403,8 +403,7 @@ function exportCSV(){
   tasks.forEach(function(t){var sc=tKra(t),ri=rInfo(sc);rows.push(['"'+t.assignee+'"','"'+mlabel(t.month)+'"','"'+t.task.replace(/"/g,'""')+'"','"'+t.status+'"','"'+(t.jira||"")+'"','"'+t.priority+'"'].concat(KPIs.map(function(k){return t.ratings&&t.ratings[k.id]?t.ratings[k.id]:""})).concat(KPIs.map(function(k){return t.ratings&&t.ratings[k.id]?bGained(t.ratings[k.id],k.wt):""})).concat([sc!==null?sc:"",'"'+ri.l+'"']).join(","));});
   rows.push("","KRA SUMMARY","Member,Month,"+KPIs.map(function(k){return k.name+"_Avg";}).join(",")+",KRA_Score,Grade");
   MEMBERS.forEach(function(m){months.forEach(function(mo){var avgs=mKpiAvg(m.id,mo),sc=mScore(m.id,mo),ri=rInfo(sc);rows.push(['"'+m.id+'"','"'+mlabel(mo)+'"'].concat(avgs.map(function(v){return v!==null?v:"";})).concat([sc!==null?sc:"",'"'+ri.l+'"']).join(","));});});
-  var blob=new Blob([rows.join("
-")],{type:"text/csv"});var a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="KRA_"+new Date().toISOString().slice(0,7)+".csv";a.click();URL.revokeObjectURL(a.href);
+  var blob=new Blob([rows.join("\n")],{type:"text/csv"});var a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="KRA_"+new Date().toISOString().slice(0,7)+".csv";a.click();URL.revokeObjectURL(a.href);
 }
 window.addEventListener("DOMContentLoaded",function(){init();});
 </script>
